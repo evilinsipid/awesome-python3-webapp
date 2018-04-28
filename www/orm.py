@@ -77,6 +77,7 @@ def create_args_string(num):
         
 # metaclass
 class ModelMetaclass(type):
+
     def __new__(cls, name, bases, attrs):
         # 排除Model类本身:
         if name == 'Model':
@@ -117,6 +118,7 @@ class ModelMetaclass(type):
         
 # 定义Model
 class Model(dict, metaclass=ModelMetaclass):
+
     def __init__(self, **kw):
         super().__init__(**kw)
         
@@ -211,6 +213,7 @@ class Model(dict, metaclass=ModelMetaclass):
             logging.warn('faild to remove by primary key: affected rows: %s' % rows)
 
 class Field(object):
+
     def __init__(self, name, column_type, primary_key, default):
         self.name = name
         self.column_type = column_type
@@ -222,21 +225,26 @@ class Field(object):
         
 # 映射varchar的StringField：
 class StringField(Field):
+
     def __init__(self, name=None, primary_key=False, default=None, ddl='varchar(100)'):
         super().__init__(name, ddl, primary_key, default)
     
 class BooleanField(Field):
+
     def __init__(self, name=None, default=False):
         super().__init__(name, 'boolean', False, default)
         
 class IntegerField(Field):
+
     def __init__(self, name=None, primary_key=False, default=0):
         super().__init__(name, 'bigint', primary_key, default)
         
 class FloatField(Field):
+
     def __init__(self, name=None, primary_key=False, default=0.0):
         super().__init__(name, 'real', primary_key, default)
         
 class TextField(Field):
+
     def __init__(self, name=None, default=None):
         super().__init__(name, 'text', False, default)
